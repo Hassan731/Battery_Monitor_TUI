@@ -1,0 +1,13 @@
+Screen {
+    background: #070b10;
+}
+
+Header {
+    background: #0a0f18;
+    color: #00cfff;
+}
+
+Footer {
+    background: #05080f;
+    color: #1a2a3a;
+}

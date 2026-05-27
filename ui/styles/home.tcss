@@ -1,0 +1,44 @@
+#home-grid {
+    width: 100%;
+    height: 1fr;
+}
+
+#col-main {
+    width: 2fr;
+}
+
+#col-bb {
+    width: 1fr;
+    height: 100%;
+}
+
+#col-mid {
+    width: 1fr;
+}
+
+#col-right {
+    width: 1fr;
+}
+
+FeatureCard {
+    border: round #003a5a;
+    padding: 1 2;
+    height: auto;
+    background: #001a2e;
+    color: #00cfff;
+    margin: 1;
+}
+
+#col-bb FeatureCard {
+    height: 1fr;
+    align: left middle;
+}
+
+.card-icon {
+    color: #00cfff;
+}
+
+.card-name {
+    color: #00cfff;
+    text-style: bold;
+}

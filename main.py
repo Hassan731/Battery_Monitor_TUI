@@ -1,5 +1,5 @@
-from ui.app import BMSMonitorApp
+from ui.app import MyApp
 
 if __name__ == "__main__":
-    app = BMSMonitorApp()
+    app = MyApp()
     app.run()
