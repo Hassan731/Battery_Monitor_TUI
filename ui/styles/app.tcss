@@ -1,0 +1,38 @@
+Screen {
+    background: #070b10;
+}
+
+Header {
+    background: #0a0f18;
+    color: #00cfff;
+}
+
+Footer {
+    height: 3;
+    background: #05080f;
+    color: #1a2a3a;
+}
+
+/* Status bar Styling */
+
+StatusBar {
+    height: 2;
+    background: #05080f;
+    border-top: tall #0f1520;
+    dock: bottom;
+    layout: horizontal;
+    padding: 0 2;
+}
+
+StatusBar Label {
+    height: 2;
+    content-align: left middle;
+    padding: 0 0;
+    color: #2a4060;
+}
+
+#sb-connection { color: #00a870; }
+#sb-sep1,
+#sb-sep2,
+#sb-sep3       { color: #1a2535; }
+#sb-session    { color: #ba7517; }

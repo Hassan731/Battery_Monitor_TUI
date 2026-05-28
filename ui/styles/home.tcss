@@ -1,0 +1,86 @@
+/* ─────────────────────────────────────────────
+   HOME SCREEN — home.tcss
+───────────────────────────────────────────── */
+
+
+/* ── Grid layout ─────────────────────────────
+   2 columns, 3 rows, fills all available space
+   between Header and StatusBar               */
+
+#home-grid {
+    grid-size: 2 3;         /* 2 columns, 3 rows */
+    grid-gutter: 1;         /* gap between cells */
+    padding: 1;
+    height: 1fr;
+    width: 100%;
+}
+
+
+/* ── FeatureCard: base ───────────────────────
+   Horizontal layout — icon left, text right
+   Accent bar on left via border-left         */
+
+FeatureCard {
+    layout: horizontal;
+    align: left middle;
+    padding: 0 2;
+    background: #0f1118;
+    border-left: tall #333;
+    height: 1fr;
+}
+
+
+/* ── Card icon ───────────────────────────────
+   Fixed width so text always aligns          */
+
+.card-icon {
+    width: 6;               /* wider cell for the icon */
+    text-style: bold;
+    content-align: center middle;
+    text-style: bold;
+}
+
+/* ── Card text block ─────────────────────────
+   Name + description stacked vertically      */
+
+.card-text {
+    height: auto;
+    width: 1fr;
+}
+
+.card-name {
+    text-style: bold;
+}
+
+.card-desc {
+    color: #4a5568;
+}
+
+
+/* ── Card themes ─────────────────────────────
+   Each card gets its accent color on the
+   left border, icon, and name                */
+
+.card-bb      { border-left: tall #00cfff; color: #00cfff; }
+.card-live    { border-left: tall #00e5a0; color: #00e5a0; }
+.card-did     { border-left: tall #c084fc; color: #c084fc; }
+.card-sniff   { border-left: tall #ffb84d; color: #ffb84d; }
+.card-routine { border-left: tall #ff80c0; color: #ff80c0; }
+.card-set     { border-left: tall #888880; color: #888880; }
+
+
+/* ── Focus state ─────────────────────────────
+   Focused card gets brighter background
+   and colored outline                        */
+
+FeatureCard.focused {
+    background: #161d2a;
+    border: tall white;
+}
+
+.card-bb.focused      { border: tall #00cfff; }
+.card-live.focused    { border: tall #00e5a0; }
+.card-did.focused     { border: tall #c084fc; }
+.card-sniff.focused   { border: tall #ffb84d; }
+.card-routine.focused { border: tall #ff80c0; }
+.card-set.focused     { border: tall #888880; }
