@@ -2,14 +2,14 @@ from textual.app import ComposeResult
 from textual.screen import Screen
 from textual.widgets import Header, Footer, Label
 
+from ui.screens.base import BaseScreen
 
-class BlackBoxScreen(Screen):
+
+class BlackBoxScreen(BaseScreen):
 
     BINDINGS = [
         ("escape", "app.pop_screen", "Back"),
     ]
 
-    def compose(self) -> ComposeResult:
-        yield Header()
+    def screen_body(self) -> ComposeResult:
         yield Label("Black Box & Logging")
-        yield Footer()

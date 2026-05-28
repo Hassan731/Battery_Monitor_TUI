@@ -8,6 +8,9 @@ from textual.screen import Screen
 from textual.widget import Widget
 from textual.widgets import Header, Footer, Label
 from textual.containers import Horizontal, Vertical
+from textual.containers import Grid
+
+from ui.screens.base import BaseScreen
 
 from ui.screens.blackbox     import BlackBoxScreen
 from ui.screens.live_monitor import LiveMonitorScreen
@@ -21,21 +24,20 @@ from ui.screens.settings     import SettingsScreen
 #  Defines what happens when an arrow key is
 #  pressed from each card index.
 #
-#  Layout reference:
-#  [0 BlackBox] [1 LiveMon ] [3 Sniffer ]
-#               [2 DID r/w ] [4 Routine ]
-#                            [5 Settings]
+# grid layout:
+# [0 BlackBox  ] [1 Sniffer  ]
+# [2 LiveMon   ] [3 Routine  ]
+# [4 DID r/w   ] [5 Settings ]
 
 NAV = {
     #        right  down   left   up
-    0: {"right": 1, "down": 1, "left": 0, "up": 0},
-    1: {"right": 3, "down": 2, "left": 0, "up": 1},
-    2: {"right": 4, "down": 2, "left": 0, "up": 1},
-    3: {"right": 3, "down": 4, "left": 1, "up": 3},
-    4: {"right": 4, "down": 5, "left": 2, "up": 3},
-    5: {"right": 5, "down": 5, "left": 2, "up": 4},
+    0: {"right": 1, "down": 2, "left": 0, "up": 0},
+    1: {"right": 1, "down": 3, "left": 0, "up": 1},
+    2: {"right": 3, "down": 4, "left": 2, "up": 0},
+    3: {"right": 3, "down": 5, "left": 2, "up": 1},
+    4: {"right": 5, "down": 4, "left": 4, "up": 2},
+    5: {"right": 5, "down": 5, "left": 4, "up": 3},
 }
-
 
 # ── Screen map ────────────────────────────────
 #  Maps each card index to its target screen.
@@ -43,13 +45,12 @@ NAV = {
 
 SCREENS = {
     0: BlackBoxScreen,
-    1: LiveMonitorScreen,
-    2: DIDScreen,
-    3: SnifferScreen,
-    4: RoutineScreen,
+    1: SnifferScreen,
+    2: LiveMonitorScreen,
+    3: RoutineScreen,
+    4: DIDScreen,
     5: SettingsScreen,
 }
-
 
 # ── Feature card widget ───────────────────────
 #  One card on the home screen.
@@ -60,15 +61,18 @@ SCREENS = {
 
 class FeatureCard(Widget):
 
-    def __init__(self, icon: str, label: str, card_id: str) -> None:
+    def __init__(self, icon: str, label: str, desc: str, card_id: str) -> None:
         super().__init__()
         self.icon    = icon
         self.label   = label
+        self.desc    = desc
         self.card_id = card_id
 
     def compose(self) -> ComposeResult:
         yield Label(self.icon,  classes="card-icon")
-        yield Label(self.label, classes="card-name")
+        with Vertical(classes="card-text"):
+            yield Label(self.label, classes="card-name")
+            yield Label(self.desc,  classes="card-desc")
 
     def on_mount(self) -> None:
         self.add_class(self.card_id)
@@ -80,7 +84,7 @@ class FeatureCard(Widget):
 #  key navigation, number shortcuts, and Enter
 #  to open the selected screen.
 
-class HomeScreen(Screen):
+class HomeScreen(BaseScreen):
 
     BINDINGS = [
         # arrow navigation — shown in footer
@@ -105,21 +109,15 @@ class HomeScreen(Screen):
 
     # ── Layout ────────────────────────────────
 
-    def compose(self) -> ComposeResult:
-        yield Header()
-        with Horizontal(id="home-grid"):
-            with Horizontal(id="col-main"):
-                with Vertical(id="col-bb"):
-                    yield FeatureCard(icon="📦", label="Black Box & Logging", card_id="card-bb")
-                with Vertical(id="col-mid"):
-                    yield FeatureCard(icon="📡", label="Live Monitoring",     card_id="card-live")
-                    yield FeatureCard(icon="📋", label="DID Read / Write",    card_id="card-did")
-            with Vertical(id="col-right"):
-                yield FeatureCard(icon="🔍", label="CAN Sniffer",         card_id="card-sniff")
-                yield FeatureCard(icon="▶",  label="Routine Control",     card_id="card-routine")
-                yield FeatureCard(icon="⚙",  label="Settings",            card_id="card-set")
-        yield Footer()
-
+    def screen_body(self) -> ComposeResult:
+        with Grid(id="home-grid"):
+            yield FeatureCard(icon="⏺", label="Black Box & Logging", desc="Record · export · replay",          card_id="card-bb")
+            yield FeatureCard(icon="◉", label="CAN Sniffer",         desc="Live frame capture · filter",       card_id="card-sniff")
+            yield FeatureCard(icon="⎍", label="Live Monitoring",     desc="Realtime DID polling",              card_id="card-live")
+            yield FeatureCard(icon="▶", label="Routine Control",     desc="Trigger UDS routines",              card_id="card-routine")
+            yield FeatureCard(icon="⊞", label="DID Read / Write",    desc="Read · write · decode bytes",       card_id="card-did")
+            yield FeatureCard(icon="⚙", label="Settings",            desc="Bitrate · ECU address · timeouts",  card_id="card-set")
+            
     def on_mount(self) -> None:
         # highlight the default card on startup
         self._get_card(self._focus_index).add_class("focused")
