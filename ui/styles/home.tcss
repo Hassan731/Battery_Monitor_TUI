@@ -14,19 +14,27 @@
 
 #col-mid {
     width: 1fr;
+    height: 100%;
 }
 
 #col-right {
     width: 1fr;
+    height: 100%;
 }
 
+
 FeatureCard {
-    border: round #003a5a;
-    padding: 1 2;
+    padding: 1 1;
     height: auto;
-    background: #001a2e;
-    color: #00cfff;
     margin: 1;
+}
+
+#col-mid FeatureCard {
+    height: 1fr;
+}
+
+#col-right FeatureCard {
+    height: 1fr;
 }
 
 #col-bb FeatureCard {
@@ -35,10 +43,45 @@ FeatureCard {
 }
 
 .card-icon {
-    color: #00cfff;
+    text-style: bold;
 }
 
 .card-name {
-    color: #00cfff;
     text-style: bold;
+}
+
+.card-bb {
+    background: #001a2e;
+    border: round #003a5a;
+    color: #00cfff;
+}
+
+.card-live {
+    background: #001a14;
+    border: round #005229;
+    color: #00e5a0;
+}
+
+.card-did {
+    background: #1a0e2e;
+    border: round #4a1a8a;
+    color: #c084fc;
+}
+
+.card-sniff {
+    background: #1a1000;
+    border: round #7a4a00;
+    color: #ffb84d;
+}
+
+.card-routine {
+    background: #1a0014;
+    border: round #7a0050;
+    color: #ff80c0;
+}
+
+.card-set {
+    background: #0f0f0f;
+    border: round #2a2a2a;
+    color: #888880;
 }
