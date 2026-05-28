@@ -1,11 +1,32 @@
+/* ─────────────────────────────────────────────
+   HOME SCREEN — home.tcss
+   Layout + card styles for the HomeScreen
+───────────────────────────────────────────── */
+
+
+/* ── Layout: top-level grid ──────────────────
+   Fills the full screen area between
+   Header and Footer                          */
+
 #home-grid {
     width: 100%;
-    height: 1fr;
+    height: 1fr;        /* take all remaining vertical space */
 }
+
+
+/* ── Layout: left main area ──────────────────
+   Takes 2/3 of the total width
+   Contains col-bb and col-mid side by side   */
 
 #col-main {
     width: 2fr;
 }
+
+
+/* ── Layout: individual columns ──────────────
+   All three inner columns share equal width
+   height: 100% makes them stretch to fill
+   the full height of their parent           */
 
 #col-bb {
     width: 1fr;
@@ -18,15 +39,34 @@
 }
 
 #col-right {
-    width: 1fr;
+    width: 1fr;         /* takes remaining 1/3 of total width */
     height: 100%;
 }
 
+
+/* ── FeatureCard: shared base styles ─────────
+   Applies to every card regardless of color
+   height: auto lets cards size to content
+   by default — overridden per column below  */
 
 FeatureCard {
     padding: 1 1;
     height: auto;
     margin: 1;
+}
+
+
+/* ── FeatureCard: column-specific heights ────
+   Cards in col-mid and col-right each take
+   equal share of the column height (1fr each
+   means 50/50 for 2 cards, 33/33/33 for 3)
+
+   col-bb has only one card so it fills
+   the full height + centers content         */
+
+#col-bb FeatureCard {
+    height: 1fr;
+    align: left middle;     /* vertically center icon + label */
 }
 
 #col-mid FeatureCard {
@@ -37,10 +77,11 @@ FeatureCard {
     height: 1fr;
 }
 
-#col-bb FeatureCard {
-    height: 1fr;
-    align: left middle;
-}
+
+/* ── Card content labels ─────────────────────
+   Both icon and name inherit the card's
+   color — bold makes them more readable
+   in a dark terminal                         */
 
 .card-icon {
     text-style: bold;
@@ -50,38 +91,65 @@ FeatureCard {
     text-style: bold;
 }
 
+
+/* ── Card themes: background + border ────────
+   Each card has a unique color family.
+   Border color is a brighter shade of the
+   same hue as the background                */
+
 .card-bb {
     background: #001a2e;
     border: round #003a5a;
-    color: #00cfff;
+    color: #00cfff;         /* cyan */
 }
 
 .card-live {
     background: #001a14;
     border: round #005229;
-    color: #00e5a0;
+    color: #00e5a0;         /* teal */
 }
 
 .card-did {
     background: #1a0e2e;
     border: round #4a1a8a;
-    color: #c084fc;
+    color: #c084fc;         /* purple */
 }
 
 .card-sniff {
     background: #1a1000;
     border: round #7a4a00;
-    color: #ffb84d;
+    color: #ffb84d;         /* amber */
 }
 
 .card-routine {
     background: #1a0014;
     border: round #7a0050;
-    color: #ff80c0;
+    color: #ff80c0;         /* pink */
 }
 
 .card-set {
     background: #0f0f0f;
     border: round #2a2a2a;
-    color: #888880;
+    color: #888880;         /* gray */
 }
+
+
+/* ── Focus states ────────────────────────────
+   When a card gains the .focused class the
+   border brightens to the card's full accent
+   color, making the selection obvious.
+
+   The generic FeatureCard.focused rule is a
+   fallback in case a new card is added
+   without its own focused rule              */
+
+FeatureCard.focused {
+    border: round white;    /* fallback for any unthemed card */
+}
+
+.card-bb.focused      { border: round #00cfff; }
+.card-live.focused    { border: round #00e5a0; }
+.card-did.focused     { border: round #c084fc; }
+.card-sniff.focused   { border: round #ffb84d; }
+.card-routine.focused { border: round #ff80c0; }
+.card-set.focused     { border: round #888880; }
