@@ -4,10 +4,11 @@ from ui.screens.home import HomeScreen
 
 class MyApp(App):
 
-    CSS_PATH = [
-        "styles/app.tcss",
-        "styles/home.tcss",
-    ]
+    CSS_PATH =  [
+                    "styles/app.tcss",
+                    "styles/home.tcss",
+                    "styles/sniffer.tcss",
+                ]
 
     TITLE = "BMS Tester"
 

@@ -69,12 +69,28 @@ FeatureCard {
 .card-set     { border-left: tall #888880; color: #888880; }
 
 
-/* ── Focus state ─────────────────────────────
-   Focused card gets brighter background
-   and colored outline                        */
+/* ── Hover states ────────────────────────────
+   Subtle background lift when mouse is over
+   the card. Does not move keyboard focus —
+   only adds a visual cue.
+   Each card uses a slightly lighter version
+   of its own background color               */
+
+.card-bb:hover     { background: #002a40; }
+.card-live:hover   { background: #002a1a; }
+.card-did:hover    { background: #2a1848; }
+.card-sniff:hover  { background: #2a1e08; }
+.card-routine:hover{ background: #2a0828; }
+.card-set:hover    { background: #1a1a1a; }
+
+
+/* ── Focus states ────────────────────────────
+   Focused card gets a bright colored border.
+   Triggered by keyboard nav or mouse click.
+   FeatureCard.focused is a fallback for any
+   card added without its own focused rule    */
 
 FeatureCard.focused {
-    background: #161d2a;
     border: tall white;
 }
 
@@ -84,3 +100,17 @@ FeatureCard.focused {
 .card-sniff.focused   { border: tall #ffb84d; }
 .card-routine.focused { border: tall #ff80c0; }
 .card-set.focused     { border: tall #888880; }
+
+
+/* ── Hover + focused combined ────────────────
+   When the mouse is over the already-focused
+   card, brighten the background further.
+   Both classes are present simultaneously
+   so this rule only fires in that exact case */
+
+.card-bb.focused:hover     { background: #003a50; }
+.card-live.focused:hover   { background: #003a22; }
+.card-did.focused:hover    { background: #3a2058; }
+.card-sniff.focused:hover  { background: #3a2810; }
+.card-routine.focused:hover{ background: #3a1030; }
+.card-set.focused:hover    { background: #222222; }

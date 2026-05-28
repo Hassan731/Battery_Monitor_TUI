@@ -61,12 +61,16 @@ SCREENS = {
 
 class FeatureCard(Widget):
 
-    def __init__(self, icon: str, label: str, desc: str, card_id: str) -> None:
+    ALLOW_FOCUS = True          # allows keyboard focus
+    can_focus = True          # required for mouse events to fire
+
+    def __init__(self, icon: str, label: str, desc: str, card_id: str, index: int) -> None:
         super().__init__()
         self.icon    = icon
         self.label   = label
         self.desc    = desc
         self.card_id = card_id
+        self._index = index
 
     def compose(self) -> ComposeResult:
         yield Label(self.icon,  classes="card-icon")
@@ -76,6 +80,18 @@ class FeatureCard(Widget):
 
     def on_mount(self) -> None:
         self.add_class(self.card_id)
+        
+    def on_click(self, event) -> None:
+        # reuse the same action keyboard uses — keeps focus in sync
+        self.screen.action_jump(self._index)
+        self.screen.action_select() # click also opens the screen
+        
+    def on_mouse_enter(self, event) -> None:
+        self.notify("hovered")
+        self.add_class("hovered")
+
+    def on_mouse_leave(self, event) -> None:
+        self.remove_class("hovered")
 
 
 # ── Home screen ───────────────────────────────
@@ -111,12 +127,12 @@ class HomeScreen(BaseScreen):
 
     def screen_body(self) -> ComposeResult:
         with Grid(id="home-grid"):
-            yield FeatureCard(icon="⏺", label="Black Box & Logging", desc="Record · export · replay",          card_id="card-bb")
-            yield FeatureCard(icon="◉", label="CAN Sniffer",         desc="Live frame capture · filter",       card_id="card-sniff")
-            yield FeatureCard(icon="⎍", label="Live Monitoring",     desc="Realtime DID polling",              card_id="card-live")
-            yield FeatureCard(icon="▶", label="Routine Control",     desc="Trigger UDS routines",              card_id="card-routine")
-            yield FeatureCard(icon="⊞", label="DID Read / Write",    desc="Read · write · decode bytes",       card_id="card-did")
-            yield FeatureCard(icon="⚙", label="Settings",            desc="Bitrate · ECU address · timeouts",  card_id="card-set")
+            yield FeatureCard(icon="⏺", label="Black Box & Logging", desc="Record · export · replay",          card_id="card-bb"        , index=0)
+            yield FeatureCard(icon="◉", label="CAN Sniffer",         desc="Live frame capture · filter",       card_id="card-sniff"     , index=1)
+            yield FeatureCard(icon="⎍", label="Live Monitoring",     desc="Realtime DID polling",              card_id="card-live"      , index=2)
+            yield FeatureCard(icon="▶", label="Routine Control",     desc="Trigger UDS routines",              card_id="card-routine"   , index=3)
+            yield FeatureCard(icon="⊞", label="DID Read / Write",    desc="Read · write · decode bytes",       card_id="card-did"       , index=4)
+            yield FeatureCard(icon="⚙", label="Settings",            desc="Bitrate · ECU address · timeouts",  card_id="card-set"       , index=5)
             
     def on_mount(self) -> None:
         # highlight the default card on startup
