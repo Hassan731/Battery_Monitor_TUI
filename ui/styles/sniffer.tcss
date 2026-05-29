@@ -1,0 +1,66 @@
+/* ─────────────────────────────────────────────
+   SNIFFER SCREEN — sniffer.tcss
+───────────────────────────────────────────── */
+
+
+/* ── Screen body ─────────────────────────────
+   Fills all space between toolbar and
+   StatusBar                                  */
+
+#sniffer-body {
+    width: 100%;
+    height: 1fr;
+    background: #070b10;
+}
+
+
+/* ── Toolbar container ───────────────────────
+   Simple state display row — no buttons      */
+
+#sniffer-toolbar {
+    height: 3;
+    background: #0a0f18;
+    border-bottom: tall #0f1825;
+    padding: 0 2;
+    align: left middle;
+    width: 100%;
+}
+
+#sniffer-toolbar Label {
+    height: 3;
+    content-align: left middle;
+    padding: 0 1;
+    background: #0a0f18;
+}
+
+
+/* ── State indicator ─────────────────────────
+   Green when running, amber when paused      */
+
+#tb-state          { color: #00a870; }   /* running — green  */
+#tb-state.paused   { color: #e8a44a; }   /* paused  — amber  */
+
+
+/* ── Mode indicator ─────────────────────────
+   Shows current view mode                   */
+
+#tb-mode            { color: #2a4060; }
+#tb-mode.stats-active { color: #c084fc; }
+
+
+/* ── Frame counter ───────────────────────────
+   Docked to the right of the toolbar        */
+
+#tb-count {
+    dock: right;
+    color: #2a4060;
+    padding-right: 2;
+}
+
+
+/* ── Separator ───────────────────────────────*/
+
+.tb-sep {
+    color: #1a2535;
+    padding: 0;
+}
